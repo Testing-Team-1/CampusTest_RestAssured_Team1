@@ -65,7 +65,7 @@ public class Cam05_FieldsTest {
         fields.put("name",fieldName);
         fields.put("code",fieldCode);
         fields.put("type","STRING");
-        fields.put("schoolId","6390f3207a3bcb6a7ac977f9");
+       fields.put("schoolId","6390f3207a3bcb6a7ac977f9");
 
         fieldID=
                 given()
@@ -80,7 +80,6 @@ public class Cam05_FieldsTest {
                         .log().body()
                         .statusCode(201)
                         .extract().path("id");
-
 
     }
 
@@ -99,7 +98,7 @@ public class Cam05_FieldsTest {
                 .then()
                 .log().body()
                 .statusCode(400)
-                .body("message", containsString("already"))
+                .body("message", containsString("already exists"))
         ;
     }
     @Test(dependsOnMethods = "createFields")
@@ -148,16 +147,16 @@ public class Cam05_FieldsTest {
         given()
 
                 .spec(recSpec)
-                .pathParam("fieldID", fieldID)
+            //    .pathParam("fieldID", fieldID)
                 .log().uri()
 
                 .when()
-                .delete("/school-service/api/attestation/{fieldID}")
+                .delete("/school-service/api/entity-field/"+ fieldID)
 
                 .then()
                 .log().body()
                 .statusCode(400)
-                .body("message", equalTo("attestation not found"))
+                .body("message", equalTo("EntityField not found"))
         ;
     }
 }
